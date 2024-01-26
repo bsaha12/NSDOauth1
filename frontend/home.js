@@ -11,11 +11,6 @@ if (access_token) {
   getUserData(access_token);
   login.classList.add("invisible");
   userdata.classList.remove("invisible");
-  document.querySelector("#userdata p").innerHTML = `Hi ${localStorage.getItem(
-    "username"
-  )}`;
-
-  document.querySelector("#userdata img").src = localStorage.getItem("avatar");
 } else {
   // if access token not present
   const url = new URL(window.location.href);
@@ -37,8 +32,11 @@ async function getUserData(access_token) {
     });
     const data = await response.json();
     const { login, avatar_url } = data;
-    localStorage.setItem("username", login);
-    localStorage.setItem("avatar", avatar_url);
+    // localStorage.setItem("username", login);
+    // localStorage.setItem("avatar", avatar_url);
+
+    document.querySelector("#userdata p").innerHTML = `Hi ${login}`;
+    document.querySelector("#userdata img").src = avatar_url;
   } catch (error) {
     console.log(error);
   }
