@@ -29,7 +29,7 @@ async function getUserData(access_token) {
         Authorization: `Bearer ${access_token}`,
       },
     });
-    const data = response.json();
+    const data = await response.json();
     console.log(data);
   } catch (error) {
     console.log(error);
