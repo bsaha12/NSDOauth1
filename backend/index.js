@@ -9,27 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.status(200).json({ msg: "Home Page" });
-});
-
-// get data by exchanging the token
-app.post("/getdata", async (req, res) => {
-  const { access_token } = req.body;
-  try {
-    const response = await fetch("https://api.github.com/user", {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    });
-
-    const data = await response.json();
-    res.status(200).json({ data });
-  } catch (error) {
-    res.status(400).json({ error });
-  }
-});
-
+//callback url
 app.get("/auth/github", async (req, res) => {
   const { code } = req.query;
   try {
@@ -54,6 +34,7 @@ app.get("/auth/github", async (req, res) => {
     res.redirect("https://jocular-taiyaki-48b18a.netlify.app");
   }
 });
+
 // starting the server
 app.listen(8080, () => {
   console.log("Server Started");

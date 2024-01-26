@@ -4,12 +4,18 @@ const frontendurl = "https://jocular-taiyaki-48b18a.netlify.app";
 const login = document.getElementById("login");
 const userdata = document.getElementById("userdata");
 
+// runs while page load
 let access_token = localStorage.getItem("access_token");
 if (access_token) {
   // add user data to panel
   getUserData(access_token);
   login.classList.add("invisible");
   userdata.classList.remove("invisible");
+  document.querySelector("#userdata p").innerHTML = `Hi ${localStorage.getItem(
+    "username"
+  )}`;
+
+  document.querySelector("#userdata img").src = localStorage.getItem("avatar");
 } else {
   // if access token not present
   const url = new URL(window.location.href);
@@ -30,7 +36,9 @@ async function getUserData(access_token) {
       },
     });
     const data = await response.json();
-    console.log(data);
+    const { login, avatar_url } = data;
+    localStorage.setItem("username", login);
+    localStorage.setItem("avatar", avatar_url);
   } catch (error) {
     console.log(error);
   }
@@ -43,4 +51,9 @@ async function loginWithGitHub() {
   } catch (error) {
     console.log(error);
   }
+}
+
+async function logout() {
+  localStorage.clear();
+  location.reload();
 }
