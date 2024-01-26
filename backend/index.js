@@ -13,6 +13,9 @@ app.use(express.json());
 app.get("/auth/github", async (req, res) => {
   const { code } = req.query;
   try {
+    if(!code){
+      return res.redirect("https://jocular-taiyaki-48b18a.netlify.app");
+    }
     let response = await fetch("https://github.com/login/oauth/access_token", {
       method: "POST",
       headers: {
@@ -31,7 +34,7 @@ app.get("/auth/github", async (req, res) => {
       `https://jocular-taiyaki-48b18a.netlify.app?access_token=${access_token}`
     );
   } catch (error) {
-    res.redirect("https://jocular-taiyaki-48b18a.netlify.app");
+    console.log(error) ;
   }
 });
 
