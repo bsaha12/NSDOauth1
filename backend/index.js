@@ -2,8 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
+require("dotenv").config();
 
 const app = express();
+
 
 //middlewares
 app.use(cors());
@@ -13,7 +15,7 @@ app.use(express.json());
 app.get("/auth/github", async (req, res) => {
   const { code } = req.query;
   try {
-    if(!code){
+    if (!code) {
       return res.redirect("https://jocular-taiyaki-48b18a.netlify.app");
     }
     let response = await fetch("https://github.com/login/oauth/access_token", {
@@ -34,7 +36,7 @@ app.get("/auth/github", async (req, res) => {
       `https://jocular-taiyaki-48b18a.netlify.app?access_token=${access_token}`
     );
   } catch (error) {
-    console.log(error) ;
+    console.log(error);
   }
 });
 
