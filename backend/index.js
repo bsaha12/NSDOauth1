@@ -6,7 +6,6 @@ require("dotenv").config();
 
 const app = express();
 
-
 //middlewares
 app.use(cors());
 app.use(express.json());
@@ -25,8 +24,8 @@ app.get("/auth/github", async (req, res) => {
         "Content-type": "application/json",
       },
       body: JSON.stringify({
-        client_id: "1660a04ca66359291538",
-        client_secret: "0ea466abea00f945c4f3e89068f85263f6ccb873",
+        client_id: process.env.client_id,
+        client_secret: process.env.client_secret,
         code,
       }),
     });
